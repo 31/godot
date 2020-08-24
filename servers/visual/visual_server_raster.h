@@ -472,6 +472,7 @@ public:
 	BIND2(viewport_set_keep_3d_linear, RID, bool)
 
 	BIND2(viewport_attach_camera, RID, RID)
+	BIND2(viewport_attach_cameras, RID, const Vector<RID> &)
 	BIND2(viewport_set_scenario, RID, RID)
 	BIND2(viewport_attach_canvas, RID, RID)
 

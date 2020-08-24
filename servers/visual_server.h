@@ -77,6 +77,8 @@ public:
 		MAX_GLOW_LEVELS = 7,
 
 		MAX_CURSORS = 8,
+
+		VIEWPORT_CAMERAS_MAX = 32,
 	};
 
 	/* TEXTURE API */
@@ -648,6 +650,7 @@ public:
 	virtual void viewport_set_keep_3d_linear(RID p_viewport, bool p_disable) = 0;
 
 	virtual void viewport_attach_camera(RID p_viewport, RID p_camera) = 0;
+	virtual void viewport_attach_cameras(RID p_viewport, const Vector<RID> &p_camera) = 0;
 	virtual void viewport_set_scenario(RID p_viewport, RID p_scenario) = 0;
 	virtual void viewport_attach_canvas(RID p_viewport, RID p_canvas) = 0;
 	virtual void viewport_remove_canvas(RID p_viewport, RID p_canvas) = 0;

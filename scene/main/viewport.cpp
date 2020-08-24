@@ -946,6 +946,7 @@ void Viewport::_camera_set(Camera *p_camera) {
 	if (camera) {
 		camera->notification(Camera::NOTIFICATION_LOST_CURRENT);
 	}
+	// TODO: (31) Multiple cameras
 	camera = p_camera;
 	if (!camera_override) {
 		if (camera)

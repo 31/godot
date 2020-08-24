@@ -68,10 +68,14 @@ void VisualServerViewport::_draw_3d(Viewport *p_viewport, ARVRInterface::Eyes p_
 		arvr_interface = ARVRServer::get_singleton()->get_primary_interface();
 	}
 
-	if (p_viewport->use_arvr && arvr_interface.is_valid()) {
-		VSG::scene->render_camera(arvr_interface, p_eye, p_viewport->camera, p_viewport->scenario, p_viewport->size, p_viewport->shadow_atlas);
-	} else {
-		VSG::scene->render_camera(p_viewport->camera, p_viewport->scenario, p_viewport->size, p_viewport->shadow_atlas);
+	for (int i = 0; i < VS::VIEWPORT_CAMERAS_MAX; i++) {
+		RID camera = p_viewport->cameras[i];
+
+		if (p_viewport->use_arvr && arvr_interface.is_valid()) {
+			VSG::scene->render_camera(arvr_interface, p_eye, camera, p_viewport->scenario, p_viewport->size, p_viewport->shadow_atlas);
+		} else {
+			VSG::scene->render_camera(camera, p_viewport->scenario, p_viewport->size, p_viewport->shadow_atlas);
+		}
 	}
 }
 
@@ -558,7 +562,30 @@ void VisualServerViewport::viewport_attach_camera(RID p_viewport, RID p_camera) 
 	ERR_FAIL_COND(!viewport);
 
 	viewport->camera = p_camera;
+
+	viewport->cameras[0] = p_camera;
+	for (int i = 1; i < VS::VIEWPORT_CAMERAS_MAX; i++) {
+		viewport->cameras[i] = RID();
+	}
 }
+
+void VisualServerViewport::viewport_attach_cameras(RID p_viewport, const Vector<RID> &cameras) {
+
+	Viewport *viewport = viewport_owner.getornull(p_viewport);
+	ERR_FAIL_COND(!viewport);
+
+	for (int i = 0; i < VS::VIEWPORT_CAMERAS_MAX; i++) {
+		if (i == 0) {
+			viewport->camera = cameras[i];
+		}
+		if (i < cameras.size()) {
+			viewport->cameras[i] = cameras[i];
+		} else {
+			viewport->cameras[i] = RID();
+		}
+	}
+}
+
 void VisualServerViewport::viewport_set_scenario(RID p_viewport, RID p_scenario) {
 
 	Viewport *viewport = viewport_owner.getornull(p_viewport);

@@ -50,6 +50,8 @@ public:
 
 		Size2i size;
 		RID camera;
+		// TODO: (31) Is it ok to use a Vector or other dynamic list here?
+		RID cameras[VS::VIEWPORT_CAMERAS_MAX];
 		RID scenario;
 
 		VS::ViewportUpdateMode update_mode;
@@ -110,6 +112,9 @@ public:
 		Map<RID, CanvasData> canvas_map;
 
 		Viewport() {
+			for (int i = 0; i < VS::VIEWPORT_CAMERAS_MAX; i++) {
+				cameras[i] = RID();
+			}
 			update_mode = VS::VIEWPORT_UPDATE_WHEN_VISIBLE;
 			clear_mode = VS::VIEWPORT_CLEAR_ALWAYS;
 			transparent_bg = false;
@@ -177,6 +182,7 @@ public:
 	void viewport_set_keep_3d_linear(RID p_viewport, bool p_keep_3d_linear);
 
 	void viewport_attach_camera(RID p_viewport, RID p_camera);
+	void viewport_attach_cameras(RID p_viewport, const Vector<RID> &cameras);
 	void viewport_set_scenario(RID p_viewport, RID p_scenario);
 	void viewport_attach_canvas(RID p_viewport, RID p_canvas);
 	void viewport_remove_canvas(RID p_viewport, RID p_canvas);
