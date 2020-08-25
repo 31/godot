@@ -579,10 +579,10 @@ void VisualServerViewport::viewport_attach_cameras(RID p_viewport, const Vector<
 	ERR_FAIL_COND(!viewport);
 
 	for (int i = 0; i < VS::VIEWPORT_CAMERAS_MAX; i++) {
-		if (i == 0) {
-			viewport->camera = cameras[i];
-		}
 		if (i < cameras.size()) {
+			//if (i == 0) {
+			//	viewport->camera = cameras[i];
+			//}
 			viewport->cameras[i] = cameras[i];
 		} else {
 			viewport->cameras[i] = RID();
