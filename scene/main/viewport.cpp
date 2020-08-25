@@ -964,9 +964,21 @@ void Viewport::_camera_set(Camera *p_camera) {
 #endif
 }
 
+void Viewport::_cameras_update() {
+
+	Vector<RID> cams;
+
+	for (Set<Camera *>::Element *E = cameras.front(); E; E = E->next()) {
+		cams.push_back(E->get()->get_camera());
+	}
+
+	VisualServer::get_singleton()->viewport_attach_cameras(viewport, cams);
+}
+
 bool Viewport::_camera_add(Camera *p_camera) {
 
 	cameras.insert(p_camera);
+	_cameras_update();
 	return cameras.size() == 1;
 }
 
@@ -977,6 +989,7 @@ void Viewport::_camera_remove(Camera *p_camera) {
 		camera->notification(Camera::NOTIFICATION_LOST_CURRENT);
 		camera = NULL;
 	}
+	_cameras_update();
 }
 
 #ifndef _3D_DISABLED

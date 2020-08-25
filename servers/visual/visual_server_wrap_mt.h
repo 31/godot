@@ -399,6 +399,7 @@ public:
 	FUNC2(viewport_set_keep_3d_linear, RID, bool)
 
 	FUNC2(viewport_attach_camera, RID, RID)
+	FUNC2(viewport_attach_cameras, RID, const Vector<RID> &)
 	FUNC2(viewport_set_scenario, RID, RID)
 	FUNC2(viewport_attach_canvas, RID, RID)
 

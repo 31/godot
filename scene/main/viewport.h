@@ -395,6 +395,7 @@ private:
 	friend class Camera;
 	void _camera_transform_changed_notify();
 	void _camera_set(Camera *p_camera);
+	void _cameras_update();
 	bool _camera_add(Camera *p_camera); //true if first
 	void _camera_remove(Camera *p_camera);
 	void _camera_make_next_current(Camera *p_exclude);
