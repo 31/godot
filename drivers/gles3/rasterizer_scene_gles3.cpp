@@ -4192,7 +4192,9 @@ void RasterizerSceneGLES3::render_scene(const Transform &p_cam_transform, const 
 
 		glColorMask(0, 0, 0, 0);
 		glClearDepth(1.0f);
-		glClear(GL_DEPTH_BUFFER_BIT);
+		if (!(env && env->keep)) {
+			glClear(GL_DEPTH_BUFFER_BIT);
+		}
 
 		render_list.clear();
 		_fill_render_list(p_cull_result, p_cull_count, true, false);
@@ -4315,7 +4317,9 @@ void RasterizerSceneGLES3::render_scene(const Transform &p_cam_transform, const 
 
 	if (!fb_cleared) {
 		glClearDepth(1.0f);
-		glClear(GL_DEPTH_BUFFER_BIT);
+		if (!(env && env->keep)) {
+			glClear(GL_DEPTH_BUFFER_BIT);
+		}
 	}
 
 	Color clear_color(0, 0, 0, 0);
