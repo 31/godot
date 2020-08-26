@@ -270,6 +270,7 @@ private:
 
 	bool disable_3d;
 	bool keep_3d_linear;
+	bool use_multiple_cameras;
 	UpdateMode update_mode;
 	RID texture_rid;
 	uint32_t texture_flags;
@@ -400,6 +401,10 @@ private:
 	void _camera_remove(Camera *p_camera);
 	void _camera_make_next_current(Camera *p_exclude);
 
+	struct CameraDepthSort {
+		bool operator()(const Camera *p_left, const Camera *p_right) const;
+	};
+
 	friend class CanvasLayer;
 	void _canvas_layer_add(CanvasLayer *p_canvas_layer);
 	void _canvas_layer_remove(CanvasLayer *p_canvas_layer);
@@ -510,6 +515,9 @@ public:
 
 	void set_disable_input(bool p_disable);
 	bool is_input_disabled() const;
+
+	void set_use_multiple_cameras(bool p_use_multiple_cameras);
+	bool is_using_multiple_cameras() const;
 
 	void set_disable_3d(bool p_disable);
 	bool is_3d_disabled() const;

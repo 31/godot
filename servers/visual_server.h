@@ -646,6 +646,7 @@ public:
 	virtual void viewport_set_hide_scenario(RID p_viewport, bool p_hide) = 0;
 	virtual void viewport_set_hide_canvas(RID p_viewport, bool p_hide) = 0;
 	virtual void viewport_set_disable_environment(RID p_viewport, bool p_disable) = 0;
+	virtual void viewport_set_use_multiple_cameras(RID p_viewport, bool p_use_multiple_cameras) = 0;
 	virtual void viewport_set_disable_3d(RID p_viewport, bool p_disable) = 0;
 	virtual void viewport_set_keep_3d_linear(RID p_viewport, bool p_disable) = 0;
 

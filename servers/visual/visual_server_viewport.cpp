@@ -70,15 +70,24 @@ void VisualServerViewport::_draw_3d(Viewport *p_viewport, ARVRInterface::Eyes p_
 
 	for (int i = 0; i < VS::VIEWPORT_CAMERAS_MAX; i++) {
 
-		RID camera = p_viewport->cameras[i];
-		if (camera == RID()) {
-			break;
+		RID camera = camera;
+
+		if (p_viewport->use_multiple_cameras) {
+
+			camera = p_viewport->cameras[i];
+			if (camera == RID()) {
+				break;
+			}
 		}
 
 		if (p_viewport->use_arvr && arvr_interface.is_valid()) {
 			VSG::scene->render_camera(arvr_interface, p_eye, camera, p_viewport->scenario, p_viewport->size, p_viewport->shadow_atlas);
 		} else {
 			VSG::scene->render_camera(camera, p_viewport->scenario, p_viewport->size, p_viewport->shadow_atlas);
+		}
+
+		if (!p_viewport->use_multiple_cameras) {
+			break;
 		}
 	}
 }
@@ -541,6 +550,14 @@ void VisualServerViewport::viewport_set_disable_environment(RID p_viewport, bool
 	viewport->disable_environment = p_disable;
 }
 
+void VisualServerViewport::viewport_set_use_multiple_cameras(RID p_viewport, bool p_use_multiple_cameras) {
+
+	Viewport *viewport = viewport_owner.getornull(p_viewport);
+	ERR_FAIL_COND(!viewport);
+
+	viewport->use_multiple_cameras = p_use_multiple_cameras;
+}
+
 void VisualServerViewport::viewport_set_disable_3d(RID p_viewport, bool p_disable) {
 
 	Viewport *viewport = viewport_owner.getornull(p_viewport);
@@ -580,9 +597,6 @@ void VisualServerViewport::viewport_attach_cameras(RID p_viewport, const Vector<
 
 	for (int i = 0; i < VS::VIEWPORT_CAMERAS_MAX; i++) {
 		if (i < cameras.size()) {
-			//if (i == 0) {
-			//	viewport->camera = cameras[i];
-			//}
 			viewport->cameras[i] = cameras[i];
 		} else {
 			viewport->cameras[i] = RID();

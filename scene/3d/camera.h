@@ -62,6 +62,7 @@ public:
 private:
 	bool force_change;
 	bool current;
+	int depth;
 	Viewport *viewport;
 
 	Projection mode;
@@ -145,6 +146,9 @@ public:
 	virtual Vector3 project_position(const Point2 &p_point, float p_z_depth) const;
 
 	Vector<Vector3> get_near_plane_points() const;
+
+	void set_depth(int p_depth);
+	int get_depth() const;
 
 	void set_cull_mask(uint32_t p_layers);
 	uint32_t get_cull_mask() const;

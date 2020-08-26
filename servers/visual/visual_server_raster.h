@@ -468,6 +468,7 @@ public:
 	BIND2(viewport_set_hide_scenario, RID, bool)
 	BIND2(viewport_set_hide_canvas, RID, bool)
 	BIND2(viewport_set_disable_environment, RID, bool)
+	BIND2(viewport_set_use_multiple_cameras, RID, bool)
 	BIND2(viewport_set_disable_3d, RID, bool)
 	BIND2(viewport_set_keep_3d_linear, RID, bool)
 

@@ -52,6 +52,11 @@
 #include "scene/scene_string_names.h"
 #include "servers/physics_2d_server.h"
 
+bool Viewport::CameraDepthSort::operator()(const Camera *p_left, const Camera *p_right) const {
+
+	return p_right->depth > p_left->depth;
+}
+
 void ViewportTexture::setup_local_to_scene() {
 
 	if (vp) {
@@ -966,13 +971,21 @@ void Viewport::_camera_set(Camera *p_camera) {
 
 void Viewport::_cameras_update() {
 
-	Vector<RID> cams;
+	Vector<Camera *> cams;
 
 	for (Set<Camera *>::Element *E = cameras.front(); E; E = E->next()) {
-		cams.push_back(E->get()->get_camera());
+		cams.push_back(E->get());
 	}
 
-	VisualServer::get_singleton()->viewport_attach_cameras(viewport, cams);
+	cams.sort_custom<CameraDepthSort>();
+
+	Vector<RID> camRids;
+
+	for (int i = 0; i < cams.size(); i++) {
+		camRids.push_back(cams[i]->get_camera());
+	}
+
+	VisualServer::get_singleton()->viewport_attach_cameras(viewport, camRids);
 }
 
 bool Viewport::_camera_add(Camera *p_camera) {
@@ -2966,6 +2979,17 @@ bool Viewport::is_input_disabled() const {
 	return disable_input;
 }
 
+void Viewport::set_use_multiple_cameras(bool p_use_multiple_cameras) {
+
+	use_multiple_cameras = p_use_multiple_cameras;
+	VS::get_singleton()->viewport_set_use_multiple_cameras(viewport, p_use_multiple_cameras);
+}
+
+bool Viewport::is_using_multiple_cameras() const {
+
+	return use_multiple_cameras;
+}
+
 void Viewport::set_disable_3d(bool p_disable) {
 	disable_3d = p_disable;
 	VS::get_singleton()->viewport_set_disable_3d(viewport, p_disable);
@@ -3211,6 +3235,9 @@ void Viewport::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("set_disable_input", "disable"), &Viewport::set_disable_input);
 	ClassDB::bind_method(D_METHOD("is_input_disabled"), &Viewport::is_input_disabled);
 
+	ClassDB::bind_method(D_METHOD("set_use_multiple_cameras"), &Viewport::set_use_multiple_cameras);
+	ClassDB::bind_method(D_METHOD("is_using_multiple_cameras"), &Viewport::is_using_multiple_cameras);
+
 	ClassDB::bind_method(D_METHOD("set_disable_3d", "disable"), &Viewport::set_disable_3d);
 	ClassDB::bind_method(D_METHOD("is_3d_disabled"), &Viewport::is_3d_disabled);
 
@@ -3252,6 +3279,7 @@ void Viewport::_bind_methods() {
 	ADD_GROUP("Rendering", "");
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "msaa", PROPERTY_HINT_ENUM, "Disabled,2x,4x,8x,16x,AndroidVR 2x,AndroidVR 4x"), "set_msaa", "get_msaa");
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "hdr"), "set_hdr", "get_hdr");
+	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "use_multiple_cameras"), "set_use_multiple_cameras", "is_using_multiple_cameras");
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "disable_3d"), "set_disable_3d", "is_3d_disabled");
 	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "keep_3d_linear"), "set_keep_3d_linear", "get_keep_3d_linear");
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "usage", PROPERTY_HINT_ENUM, "2D,2D No-Sampling,3D,3D No-Effects"), "set_usage", "get_usage");

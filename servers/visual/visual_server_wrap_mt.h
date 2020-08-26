@@ -395,6 +395,7 @@ public:
 	FUNC2(viewport_set_hide_scenario, RID, bool)
 	FUNC2(viewport_set_hide_canvas, RID, bool)
 	FUNC2(viewport_set_disable_environment, RID, bool)
+	FUNC2(viewport_set_use_multiple_cameras, RID, bool)
 	FUNC2(viewport_set_disable_3d, RID, bool)
 	FUNC2(viewport_set_keep_3d_linear, RID, bool)
 

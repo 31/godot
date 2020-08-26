@@ -36,6 +36,8 @@
 #include "servers/arvr/arvr_interface.h"
 #include "servers/visual_server.h"
 
+class Camera;
+
 class VisualServerViewport {
 public:
 	struct CanvasBase : public RID_Data {
@@ -50,9 +52,10 @@ public:
 
 		Size2i size;
 		RID camera;
-		// TODO: (31) Is it ok to use a Vector or other dynamic list here?
-		RID cameras[VS::VIEWPORT_CAMERAS_MAX];
 		RID scenario;
+
+		bool use_multiple_cameras;
+		RID cameras[VS::VIEWPORT_CAMERAS_MAX];
 
 		VS::ViewportUpdateMode update_mode;
 		RID render_target;
@@ -148,6 +151,7 @@ public:
 		}
 	};
 
+
 	Vector<Viewport *> active_viewports;
 
 private:
@@ -178,6 +182,7 @@ public:
 	void viewport_set_hide_scenario(RID p_viewport, bool p_hide);
 	void viewport_set_hide_canvas(RID p_viewport, bool p_hide);
 	void viewport_set_disable_environment(RID p_viewport, bool p_disable);
+	void viewport_set_use_multiple_cameras(RID p_viewport, bool p_use_multiple_cameras);
 	void viewport_set_disable_3d(RID p_viewport, bool p_disable);
 	void viewport_set_keep_3d_linear(RID p_viewport, bool p_keep_3d_linear);
 
