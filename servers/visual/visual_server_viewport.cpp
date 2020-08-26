@@ -70,20 +70,20 @@ void VisualServerViewport::_draw_3d(Viewport *p_viewport, ARVRInterface::Eyes p_
 
 	for (int i = 0; i < VS::VIEWPORT_CAMERAS_MAX; i++) {
 
-		RID camera = camera;
+		RID cameraRid = p_viewport->camera;
 
 		if (p_viewport->use_multiple_cameras) {
 
-			camera = p_viewport->cameras[i];
-			if (camera == RID()) {
+			cameraRid = p_viewport->cameras[i];
+			if (cameraRid == RID()) {
 				break;
 			}
 		}
 
 		if (p_viewport->use_arvr && arvr_interface.is_valid()) {
-			VSG::scene->render_camera(arvr_interface, p_eye, camera, p_viewport->scenario, p_viewport->size, p_viewport->shadow_atlas);
+			VSG::scene->render_camera(arvr_interface, p_eye, cameraRid, p_viewport->scenario, p_viewport->size, p_viewport->shadow_atlas);
 		} else {
-			VSG::scene->render_camera(camera, p_viewport->scenario, p_viewport->size, p_viewport->shadow_atlas);
+			VSG::scene->render_camera(cameraRid, p_viewport->scenario, p_viewport->size, p_viewport->shadow_atlas);
 		}
 
 		if (!p_viewport->use_multiple_cameras) {

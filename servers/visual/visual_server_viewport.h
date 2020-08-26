@@ -132,6 +132,7 @@ public:
 				render_info[i] = 0;
 			}
 			use_arvr = false;
+			use_multiple_cameras = false;
 		}
 	};
 

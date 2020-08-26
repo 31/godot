@@ -3421,6 +3421,7 @@ Viewport::Viewport() {
 	disable_input = false;
 	disable_3d = false;
 	keep_3d_linear = false;
+	use_multiple_cameras = false;
 
 	//window tooltip
 	gui.tooltip_timer = -1;
