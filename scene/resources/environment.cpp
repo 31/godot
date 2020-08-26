@@ -975,6 +975,7 @@ void Environment::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("set_camera_feed_id", "camera_feed_id"), &Environment::set_camera_feed_id);
 
 	ClassDB::bind_method(D_METHOD("get_background"), &Environment::get_background);
+	ClassDB::bind_method(D_METHOD("get_keep"), &Environment::get_keep);
 	ClassDB::bind_method(D_METHOD("get_sky"), &Environment::get_sky);
 	ClassDB::bind_method(D_METHOD("get_sky_custom_fov"), &Environment::get_sky_custom_fov);
 	ClassDB::bind_method(D_METHOD("get_sky_orientation"), &Environment::get_sky_orientation);
@@ -989,8 +990,8 @@ void Environment::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_camera_feed_id"), &Environment::get_camera_feed_id);
 
 	ADD_GROUP("Background", "background_");
+	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "background_keep"), "set_keep", "get_keep");
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "background_mode", PROPERTY_HINT_ENUM, "Clear Color,Custom Color,Sky,Color+Sky,Canvas,Keep,Camera Feed"), "set_background", "get_background");
-	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "keep"), "set_keep", "get_keep");
 	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "background_sky", PROPERTY_HINT_RESOURCE_TYPE, "Sky"), "set_sky", "get_sky");
 	ADD_PROPERTY(PropertyInfo(Variant::REAL, "background_sky_custom_fov", PROPERTY_HINT_RANGE, "0,180,0.1"), "set_sky_custom_fov", "get_sky_custom_fov");
 	ADD_PROPERTY(PropertyInfo(Variant::BASIS, "background_sky_orientation"), "set_sky_orientation", "get_sky_orientation");
