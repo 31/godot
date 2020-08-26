@@ -90,7 +90,7 @@ void Camera::_update_camera() {
 		get_viewport()->_camera_transform_changed_notify();
 	*/
 
-	if (get_tree()->is_node_being_edited(this) || !is_current())
+	if (get_tree()->is_node_being_edited(this) || (!get_viewport()->use_multiple_cameras && !is_current()))
 		return;
 
 	get_viewport()->_camera_transform_changed_notify();
