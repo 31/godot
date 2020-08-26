@@ -776,6 +776,13 @@ void RasterizerSceneGLES3::environment_set_background(RID p_env, VS::Environment
 	env->bg_mode = p_bg;
 }
 
+void RasterizerSceneGLES3::environment_set_keep(RID p_env, bool p_keep) {
+
+	Environment *env = environment_owner.getornull(p_env);
+	ERR_FAIL_COND(!env);
+	env->keep = p_keep;
+}
+
 void RasterizerSceneGLES3::environment_set_sky(RID p_env, RID p_sky) {
 
 	Environment *env = environment_owner.getornull(p_env);
@@ -4355,7 +4362,7 @@ void RasterizerSceneGLES3::render_scene(const Transform &p_cam_transform, const 
 		storage->frame.clear_request = false;
 	}
 
-	if (!env || env->bg_mode != VS::ENV_BG_KEEP) {
+	if (!env || (!env->keep && env->bg_mode != VS::ENV_BG_KEEP)) {
 		glClearBufferfv(GL_COLOR, 0, clear_color.components); // specular
 	}
 

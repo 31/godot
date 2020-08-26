@@ -46,6 +46,13 @@ void Environment::set_background(BGMode p_bg) {
 	_change_notify();
 }
 
+void Environment::set_keep(bool p_keep) {
+
+	keep = p_keep;
+	VS::get_singleton()->environment_set_keep(environment, p_keep);
+	_change_notify();
+}
+
 void Environment::set_sky(const Ref<Sky> &p_sky) {
 
 	bg_sky = p_sky;
@@ -121,6 +128,12 @@ Environment::BGMode Environment::get_background() const {
 
 	return bg_mode;
 }
+
+bool Environment::get_keep() const {
+
+	return keep;
+}
+
 Ref<Sky> Environment::get_sky() const {
 
 	return bg_sky;
@@ -947,6 +960,7 @@ float Environment::get_fog_height_curve() const {
 void Environment::_bind_methods() {
 
 	ClassDB::bind_method(D_METHOD("set_background", "mode"), &Environment::set_background);
+	ClassDB::bind_method(D_METHOD("set_keep", "keep"), &Environment::set_keep);
 	ClassDB::bind_method(D_METHOD("set_sky", "sky"), &Environment::set_sky);
 	ClassDB::bind_method(D_METHOD("set_sky_custom_fov", "scale"), &Environment::set_sky_custom_fov);
 	ClassDB::bind_method(D_METHOD("set_sky_orientation", "orientation"), &Environment::set_sky_orientation);
@@ -976,6 +990,7 @@ void Environment::_bind_methods() {
 
 	ADD_GROUP("Background", "background_");
 	ADD_PROPERTY(PropertyInfo(Variant::INT, "background_mode", PROPERTY_HINT_ENUM, "Clear Color,Custom Color,Sky,Color+Sky,Canvas,Keep,Camera Feed"), "set_background", "get_background");
+	ADD_PROPERTY(PropertyInfo(Variant::BOOL, "keep"), "set_keep", "get_keep");
 	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "background_sky", PROPERTY_HINT_RESOURCE_TYPE, "Sky"), "set_sky", "get_sky");
 	ADD_PROPERTY(PropertyInfo(Variant::REAL, "background_sky_custom_fov", PROPERTY_HINT_RANGE, "0,180,0.1"), "set_sky_custom_fov", "get_sky_custom_fov");
 	ADD_PROPERTY(PropertyInfo(Variant::BASIS, "background_sky_orientation"), "set_sky_orientation", "get_sky_orientation");
@@ -1321,6 +1336,7 @@ Environment::Environment() :
 	environment = VS::get_singleton()->environment_create();
 
 	bg_mode = BG_CLEAR_COLOR;
+	keep = false;
 	bg_sky_custom_fov = 0;
 	bg_sky_orientation = Basis();
 	bg_energy = 1.0;

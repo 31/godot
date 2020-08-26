@@ -692,6 +692,13 @@ void RasterizerSceneGLES2::environment_set_background(RID p_env, VS::Environment
 	env->bg_mode = p_bg;
 }
 
+void RasterizerSceneGLES2::environment_set_keep(RID p_env, bool p_keep) {
+
+	Environment *env = environment_owner.getornull(p_env);
+	ERR_FAIL_COND(!env);
+	env->keep = p_keep;
+}
+
 void RasterizerSceneGLES2::environment_set_sky(RID p_env, RID p_sky) {
 	Environment *env = environment_owner.getornull(p_env);
 	ERR_FAIL_COND(!env);
@@ -3273,7 +3280,7 @@ void RasterizerSceneGLES2::render_scene(const Transform &p_cam_transform, const 
 		reflection_probe_count = 0;
 	}
 
-	if (env && env->bg_mode == VS::ENV_BG_CANVAS) {
+	if (env && (!env->keep && env->bg_mode == VS::ENV_BG_CANVAS)) {
 		// If using canvas background, copy 2d to screen copy texture
 		// TODO: When GLES2 renders to current_rt->mip_maps[], this copy will no longer be needed
 		_copy_texture_to_buffer(storage->frame.current_rt->color, storage->frame.current_rt->copy_screen_effect.fbo);

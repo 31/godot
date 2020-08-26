@@ -347,6 +347,7 @@ public:
 
 	struct Environment : public RID_Data {
 		VS::EnvironmentBG bg_mode;
+		bool keep;
 
 		RID sky;
 		float sky_custom_fov;
@@ -464,6 +465,7 @@ public:
 	virtual RID environment_create();
 
 	virtual void environment_set_background(RID p_env, VS::EnvironmentBG p_bg);
+	virtual void environment_set_keep(RID p_env, bool p_keep);
 	virtual void environment_set_sky(RID p_env, RID p_sky);
 	virtual void environment_set_sky_custom_fov(RID p_env, float p_scale);
 	virtual void environment_set_sky_orientation(RID p_env, const Basis &p_orientation);

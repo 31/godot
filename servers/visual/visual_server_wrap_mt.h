@@ -428,6 +428,7 @@ public:
 	FUNCRID(environment)
 
 	FUNC2(environment_set_background, RID, EnvironmentBG)
+	FUNC2(environment_set_keep, RID, bool)
 	FUNC2(environment_set_sky, RID, RID)
 	FUNC2(environment_set_sky_custom_fov, RID, float)
 	FUNC2(environment_set_sky_orientation, RID, const Basis &)

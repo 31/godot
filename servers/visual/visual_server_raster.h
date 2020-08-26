@@ -501,6 +501,7 @@ public:
 	BIND0R(RID, environment_create)
 
 	BIND2(environment_set_background, RID, EnvironmentBG)
+	BIND2(environment_set_keep, RID, bool)
 	BIND2(environment_set_sky, RID, RID)
 	BIND2(environment_set_sky_custom_fov, RID, float)
 	BIND2(environment_set_sky_orientation, RID, const Basis &)

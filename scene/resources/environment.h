@@ -90,6 +90,7 @@ private:
 	RID environment;
 
 	BGMode bg_mode;
+	bool keep;
 	Ref<Sky> bg_sky;
 	float bg_sky_custom_fov;
 	Basis bg_sky_orientation;
@@ -183,6 +184,7 @@ protected:
 
 public:
 	void set_background(BGMode p_bg);
+	void set_keep(bool p_keep);
 	void set_sky(const Ref<Sky> &p_sky);
 	void set_sky_custom_fov(float p_scale);
 	void set_sky_orientation(const Basis &p_orientation);
@@ -197,6 +199,7 @@ public:
 	void set_camera_feed_id(int p_camera_feed_id);
 
 	BGMode get_background() const;
+	bool get_keep() const;
 	Ref<Sky> get_sky() const;
 	float get_sky_custom_fov() const;
 	Basis get_sky_orientation() const;
