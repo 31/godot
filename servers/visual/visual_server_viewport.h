@@ -36,8 +36,6 @@
 #include "servers/arvr/arvr_interface.h"
 #include "servers/visual_server.h"
 
-class Camera;
-
 class VisualServerViewport {
 public:
 	struct CanvasBase : public RID_Data {
