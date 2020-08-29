@@ -783,6 +783,13 @@ void RasterizerSceneGLES3::environment_set_keep(RID p_env, bool p_keep) {
 	env->keep = p_keep;
 }
 
+void RasterizerSceneGLES3::environment_set_keep_depth(RID p_env, bool p_keep_depth) {
+
+	Environment *env = environment_owner.getornull(p_env);
+	ERR_FAIL_COND(!env);
+	env->keep_depth = p_keep_depth;
+}
+
 void RasterizerSceneGLES3::environment_set_sky(RID p_env, RID p_sky) {
 
 	Environment *env = environment_owner.getornull(p_env);
@@ -4192,7 +4199,7 @@ void RasterizerSceneGLES3::render_scene(const Transform &p_cam_transform, const 
 
 		glColorMask(0, 0, 0, 0);
 		glClearDepth(1.0f);
-		if (!(env && env->keep)) {
+		if (!(env && env->keep_depth)) {
 			glClear(GL_DEPTH_BUFFER_BIT);
 		}
 
@@ -4317,7 +4324,7 @@ void RasterizerSceneGLES3::render_scene(const Transform &p_cam_transform, const 
 
 	if (!fb_cleared) {
 		glClearDepth(1.0f);
-		if (!(env && env->keep)) {
+		if (!(env && env->keep_depth)) {
 			glClear(GL_DEPTH_BUFFER_BIT);
 		}
 	}

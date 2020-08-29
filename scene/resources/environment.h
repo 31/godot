@@ -91,6 +91,7 @@ private:
 
 	BGMode bg_mode;
 	bool keep;
+	bool keep_depth;
 	Ref<Sky> bg_sky;
 	float bg_sky_custom_fov;
 	Basis bg_sky_orientation;
@@ -185,6 +186,7 @@ protected:
 public:
 	void set_background(BGMode p_bg);
 	void set_keep(bool p_keep);
+	void set_keep_depth(bool p_keep_depth);
 	void set_sky(const Ref<Sky> &p_sky);
 	void set_sky_custom_fov(float p_scale);
 	void set_sky_orientation(const Basis &p_orientation);
@@ -200,6 +202,7 @@ public:
 
 	BGMode get_background() const;
 	bool get_keep() const;
+	bool get_keep_depth() const;
 	Ref<Sky> get_sky() const;
 	float get_sky_custom_fov() const;
 	Basis get_sky_orientation() const;

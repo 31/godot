@@ -699,6 +699,13 @@ void RasterizerSceneGLES2::environment_set_keep(RID p_env, bool p_keep) {
 	env->keep = p_keep;
 }
 
+void RasterizerSceneGLES2::environment_set_keep_depth(RID p_env, bool p_keep_depth) {
+
+	Environment *env = environment_owner.getornull(p_env);
+	ERR_FAIL_COND(!env);
+	env->keep_depth = p_keep_depth;
+}
+
 void RasterizerSceneGLES2::environment_set_sky(RID p_env, RID p_sky) {
 	Environment *env = environment_owner.getornull(p_env);
 	ERR_FAIL_COND(!env);
