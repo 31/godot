@@ -698,6 +698,7 @@ Camera::Camera() {
 	near = 0;
 	far = 0;
 	current = false;
+	depth = 0;
 	viewport = NULL;
 	force_change = false;
 	mode = PROJECTION_PERSPECTIVE;
