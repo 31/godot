@@ -81,7 +81,7 @@ void VisualServerViewport::_draw_3d(Viewport *p_viewport, ARVRInterface::Eyes p_
 		}
 
 		if (p_viewport->use_arvr && arvr_interface.is_valid()) {
-			VSG::scene->render_camera(arvr_interface, p_eye, cameraRid, p_viewport->scenario, p_viewport->size, p_viewport->shadow_atlas);
+			VSG::scene->render_camera(arvr_interface, p_eye, cameraRid, p_viewport->scenario, p_viewport->size, p_viewport->shadow_atlas, p_viewport->use_multiple_cameras);
 		} else {
 			VSG::scene->render_camera(cameraRid, p_viewport->scenario, p_viewport->size, p_viewport->shadow_atlas);
 		}

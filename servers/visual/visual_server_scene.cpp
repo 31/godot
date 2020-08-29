@@ -1761,7 +1761,7 @@ void VisualServerScene::render_camera(RID p_camera, RID p_scenario, Size2 p_view
 #endif
 }
 
-void VisualServerScene::render_camera(Ref<ARVRInterface> &p_interface, ARVRInterface::Eyes p_eye, RID p_camera, RID p_scenario, Size2 p_viewport_size, RID p_shadow_atlas) {
+void VisualServerScene::render_camera(Ref<ARVRInterface> &p_interface, ARVRInterface::Eyes p_eye, RID p_camera, RID p_scenario, Size2 p_viewport_size, RID p_shadow_atlas, bool use_multiple_cameras) {
 	// render for AR/VR interface
 
 	Camera *camera = camera_owner.getornull(p_camera);
@@ -1776,8 +1776,9 @@ void VisualServerScene::render_camera(Ref<ARVRInterface> &p_interface, ARVRInter
 	Transform world_origin = ARVRServer::get_singleton()->get_world_origin();
 	Transform cam_transform = p_interface->get_transform_for_eye(p_eye, world_origin);
 
-	// For stereo render we only prepare for our left eye and then reuse the outcome for our right eye
-	if (p_eye == ARVRInterface::EYE_LEFT) {
+	// For stereo render we only prepare for our left eye and then reuse the outcome for our right eye.
+	// But if we have multiple cameras, we have to redo layer culling, so skip this optimization.
+	if (p_eye == ARVRInterface::EYE_LEFT || (use_multiple_cameras && p_eye == ARVRInterface::EYE_RIGHT)) {
 		///@TODO possibly move responsibility for this into our ARVRServer or ARVRInterface?
 
 		// Center our transform, we assume basis is equal.
