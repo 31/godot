@@ -1,0 +1,12 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/ingydotnet/git-subrepo#readme
+;
+[subrepo]
+	remote = https://github.com/V-Sekai/manifold.git
+	branch = master
+	commit = dad73e1bf4fd6c382845551c45100771280692cb
+	parent = 646aa41ba53e5fa64cd5e04fab05909c0ef668a4
+	method = merge
+	cmdver = 0.4.6
