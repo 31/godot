@@ -2783,17 +2783,10 @@ CSGBrush *CSGConvexHull3D::_build_brush() {
 	new_brush->manifold = new_brush->manifold.Hull(converted_points);
 
 	HashMap<uint32_t, Ref<Material>> mesh_materials;
+	mesh_materials[0] = material;
 	new_brush->unpack_manifold(mesh_materials);
 
 	return new_brush;
-}
-
-void CSGConvexHull3D::_notification(int p_what) {
-	if (p_what == NOTIFICATION_EXIT_TREE) {
-	}
-}
-
-void CSGConvexHull3D::_validate_property(PropertyInfo &p_property) const {
 }
 
 void CSGConvexHull3D::_bind_methods() {
