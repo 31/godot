@@ -2444,3 +2444,59 @@ CSGPolygon3D::CSGPolygon3D() {
 	path_joined = false;
 	path = nullptr;
 }
+
+///////////////
+
+CSGBrush *CSGConvexHull3D::_build_brush() {
+	CSGBrush *new_brush = memnew(CSGBrush);
+
+	if (points.size() < 4) {
+		return new_brush;
+	}
+
+	make_brush_hull(new_brush, points, material);
+
+	return new_brush;
+}
+
+void CSGConvexHull3D::_bind_methods() {
+	ClassDB::bind_method(D_METHOD("set_points", "points"), &CSGConvexHull3D::set_points);
+	ClassDB::bind_method(D_METHOD("get_points"), &CSGConvexHull3D::get_points);
+
+	ClassDB::bind_method(D_METHOD("set_material", "material"), &CSGConvexHull3D::set_material);
+	ClassDB::bind_method(D_METHOD("get_material"), &CSGConvexHull3D::get_material);
+
+	ADD_PROPERTY(PropertyInfo(Variant::PACKED_VECTOR2_ARRAY, "points"), "set_points", "get_points");
+	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "material", PROPERTY_HINT_RESOURCE_TYPE, "Material"), "set_material", "get_material");
+}
+
+void CSGConvexHull3D::set_points(const Vector<Vector3> &p_points) {
+	points = p_points;
+	_make_dirty();
+	update_gizmos();
+}
+
+Vector<Vector3> CSGConvexHull3D::get_points() const {
+	return points;
+}
+
+void CSGConvexHull3D::set_material(const Ref<Material> &p_material) {
+	material = p_material;
+	_make_dirty();
+}
+
+Ref<Material> CSGConvexHull3D::get_material() const {
+	return material;
+}
+
+CSGConvexHull3D::CSGConvexHull3D() {
+	// defaults
+	points.push_back(Vector3(0, 0, 0));
+	points.push_back(Vector3(0, 1, 0));
+	points.push_back(Vector3(1, 1, 0));
+	points.push_back(Vector3(1, 0, 0));
+	points.push_back(Vector3(0, 0, 1));
+	points.push_back(Vector3(0, 1, 1));
+	points.push_back(Vector3(1, 1, 1));
+	points.push_back(Vector3(1, 0, 1));
+}
